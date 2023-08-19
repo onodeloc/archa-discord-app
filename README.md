@@ -1,3 +1,13 @@
+# PERSONAL NOTES
+
+To set up:
+1. nodemon app.js
+2. ngrok http 3000
+
+After, we go to [our app](https://discord.com/developers/applications/1135725519783071774/information) and add the ngrok link, appended with /interactions.
+
+# ---
+
 # Getting Started app for Discord
 
 This project contains a basic rock-paper-scissors-style Discord app written in JavaScript, built for the [getting started guide](https://discord.com/developers/docs/getting-started).
