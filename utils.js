@@ -62,7 +62,7 @@ export function getRandomEmoji() {
   return emojiList[Math.floor(Math.random() * emojiList.length)];
 }
 
-export function getFortniteLocation() {
+export async function getFortniteLocation() {
   const locationList = [
     'Anvil Square',
     'Breakwater Bay',
@@ -79,7 +79,15 @@ export function getFortniteLocation() {
     'Shady Stilts',
     'Creeky Compound',
     'Rumble Ruins',]
-  return locationList[Math.floor(Math.random() * locationList.length)];
+
+  let selectedLocation = locationList[Math.floor(Math.random() * locationList.length)]
+
+  const completion = await openai.chat.completions.create({
+    messages: [{ role: 'user', content: "In between 10 and 35 words, let the user they will be dropping " + selectedLocation + " in Fortnite. Feel free to insult the location based on the specific traits of the location, and/or the player. Don't use exclamation points. Feel free to answer like a cowboy, australian, or otherwise wacky character." }],
+    model: 'gpt-3.5-turbo',
+  });
+
+  return completion.choices[0]['message']['content'];
 }
 
 export async function getChatResponse(userQuery) {
