@@ -7,7 +7,7 @@ import {
   MessageComponentTypes,
   ButtonStyleTypes,
 } from 'discord-interactions';
-import { VerifyDiscordRequest, getRandomEmoji, DiscordRequest } from './utils.js';
+import { VerifyDiscordRequest, getRandomEmoji, getFortniteLocation, getChatResponse, DiscordRequest } from './utils.js';
 import { getShuffledOptions, getResult } from './game.js';
 
 // Create an express app
@@ -51,6 +51,30 @@ app.post('/interactions', async function (req, res) {
           content: 'hello world!! ' + getRandomEmoji(),
         },
       });
+    }
+    if (name === 'fortnite') {
+      // Send a random Fortnite location
+      return res.send({
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        data: {
+          content: `You've picked: ` + getFortniteLocation(),
+        }
+      })
+    }
+    if (name === 'chatgpt') {
+      // Respond using ChatGPT
+      // console.log("start")
+      // const userQuery = options.get('chatgpt')
+      // console.log(userQuery)
+      const userQuery = data['options'][0]['value']
+      console.log(userQuery)
+
+      return res.send({
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        data: {
+          content: await getChatResponse(userQuery),
+        }
+      })
     }
     // "challenge" command
     if (name === 'challenge' && id) {

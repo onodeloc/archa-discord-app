@@ -1,6 +1,11 @@
 import 'dotenv/config';
+import OpenAI from 'openai';
 import fetch from 'node-fetch';
 import { verifyKey } from 'discord-interactions';
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
 export function VerifyDiscordRequest(clientKey) {
   return function (req, res, buf, encoding) {
@@ -53,8 +58,37 @@ export async function InstallGlobalCommands(appId, commands) {
 
 // Simple method that returns a random emoji from list
 export function getRandomEmoji() {
-  const emojiList = ['😭','😄','😌','🤓','😎','😤','🤖','😶‍🌫️','🌏','📸','💿','👋','🌊','✨'];
+  const emojiList = ['😭', '😄', '😌', '🤓', '😎', '😤', '🤖', '😶‍🌫️', '🌏', '📸', '💿', '👋', '🌊', '✨'];
   return emojiList[Math.floor(Math.random() * emojiList.length)];
+}
+
+export function getFortniteLocation() {
+  const locationList = [
+    'Anvil Square',
+    'Breakwater Bay',
+    'Brutal Bastion',
+    'Faulty Splits',
+    'Lonely Labs',
+    'Shattered Slabs',
+    'Slappy Shores',
+    'The Citadel',
+    'MEGA City',
+    'Steamy Springs',
+    'Kenjutsu Crossing',
+    'Knotty Nets',
+    'Shady Stilts',
+    'Creeky Compound',
+    'Rumble Ruins',]
+  return locationList[Math.floor(Math.random() * locationList.length)];
+}
+
+export async function getChatResponse(userQuery) {
+  const completion = await openai.chat.completions.create({
+    messages: [{ role: 'user', content: userQuery }],
+    model: 'gpt-3.5-turbo',
+  });
+
+  return completion.choices[0]['message']['content']
 }
 
 export function capitalize(str) {

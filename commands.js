@@ -40,6 +40,27 @@ const CHALLENGE_COMMAND = {
   type: 1,
 };
 
-const ALL_COMMANDS = [TEST_COMMAND, CHALLENGE_COMMAND];
+// Select random Fortnite destination
+const FORTNITE_LOCATION = {
+  name: 'fortnite',
+  description: 'Pick a random Fortnite location',
+  type: 1,
+}
+
+const CHATGPT_RESPONSE = {
+  name: 'chatgpt',
+  description: 'Query ChatGPT',
+  type: 1,
+  options: [
+    {
+      name: 'selection',
+      description: 'Your selected query',
+      type: 3,
+      required: true,
+    }
+  ]
+}
+
+const ALL_COMMANDS = [FORTNITE_LOCATION, CHATGPT_RESPONSE];
 
 InstallGlobalCommands(process.env.APP_ID, ALL_COMMANDS);
