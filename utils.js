@@ -92,7 +92,7 @@ export async function getFortniteLocation() {
 
 export async function getChatResponse(userQuery) {
   const completion = await openai.chat.completions.create({
-    messages: [{ role: 'user', content: userQuery }],
+    messages: [{ role: 'user', content: "Respond to the following question in under 80 words: " + userQuery }],
     model: 'gpt-3.5-turbo',
   });
 
